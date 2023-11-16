@@ -1,0 +1,143 @@
+﻿@model CurrentEmployeeViewModel
+
+<h1 style="margin-bottom:50px; margin-top:15px;">Выбранный сотрудник</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Фамилия</th>
+            <th scope="col">Имя</th>
+            <th scope="col">Отчество</th>
+            <th scope="col">Пол</th>
+            <th scope="col">Должность</th>
+            <th scope="col">Возраст</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th scope="row">@Model.CurrentEmployee.Id</th>
+            <td>@Model.CurrentEmployee.LastName</td>
+            <td>@Model.CurrentEmployee.FirstName</td>
+            <td>@Model.CurrentEmployee.MiddleName</td>
+            <td>@Model.CurrentEmployee.Gender</td>
+            <td>@Model.CurrentEmployee.Post</td>
+            <td>@Model.CurrentEmployee.Age</td>
+        </tr>
+    </tbody>
+</table>
+
+<h2 style="margin-bottom:25px; margin-top:5px;">Пересечение отпуска с сотрудниками моего отдела. Сотрудники моложе 30 лет.</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Фамилия</th>
+            <th scope="col">Имя</th>
+            <th scope="col">Отчество</th>
+            <th scope="col">Пол</th>
+            <th scope="col">Должность</th>
+            <th scope="col">Возраст</th>
+        </tr>
+    </thead>
+    @foreach (var employee in Model.EmployeesFirstGroup)
+    {
+        <tbody>
+            <tr>
+                <th scope="row">@employee.Id</th>
+                <td>@employee.LastName</td>
+                <td>@employee.FirstName</td>
+                <td>@employee.MiddleName</td>
+                <td>@employee.Gender</td>
+                <td>@employee.Post</td>
+                <td>@employee.Age</td>
+            </tr>
+        </tbody>
+    }
+</table>
+
+<h2 style="margin-bottom:25px; margin-top:5px;">Пересечение отпуска с сотрудниками-женщинами не из моего отдела. Возраст сотрудников - старше 30, но моложе 50.</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Фамилия</th>
+            <th scope="col">Имя</th>
+            <th scope="col">Отчество</th>
+            <th scope="col">Пол</th>
+            <th scope="col">Должность</th>
+            <th scope="col">Возраст</th>
+        </tr>
+    </thead>
+    @foreach (var employee in Model.EmployeesSecondGroup)
+    {
+        <tbody>
+            <tr>
+                <th scope="row">@employee.Id</th>
+                <td>@employee.LastName</td>
+                <td>@employee.FirstName</td>
+                <td>@employee.MiddleName</td>
+                <td>@employee.Gender</td>
+                <td>@employee.Post</td>
+                <td>@employee.Age</td>
+            </tr>
+        </tbody>
+    }
+</table>
+
+<h2 style="margin-bottom:25px; margin-top:5px;">Пересечение отпуска с сотрудниками из любого отдела. Возраст сотрудников - старше 50 лет.</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Фамилия</th>
+            <th scope="col">Имя</th>
+            <th scope="col">Отчество</th>
+            <th scope="col">Пол</th>
+            <th scope="col">Должность</th>
+            <th scope="col">Возраст</th>
+        </tr>
+    </thead>
+    @foreach (var employee in Model.EmployeesThirdGroup)
+    {
+        <tbody>
+            <tr>
+                <th scope="row">@employee.Id</th>
+                <td>@employee.LastName</td>
+                <td>@employee.FirstName</td>
+                <td>@employee.MiddleName</td>
+                <td>@employee.Gender</td>
+                <td>@employee.Post</td>
+                <td>@employee.Age</td>
+            </tr>
+        </tbody>
+    }
+</table>
+
+<h2 style="margin-bottom:25px; margin-top:5px;">Отпуска без пересечения.</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Фамилия</th>
+            <th scope="col">Имя</th>
+            <th scope="col">Отчество</th>
+            <th scope="col">Пол</th>
+            <th scope="col">Должность</th>
+            <th scope="col">Возраст</th>
+        </tr>
+    </thead>
+    @foreach (var employee in Model.EmployeesFourthGroup)
+    {
+        <tbody>
+            <tr>
+                <th scope="row">@employee.Id</th>
+                <td>@employee.LastName</td>
+                <td>@employee.FirstName</td>
+                <td>@employee.MiddleName</td>
+                <td>@employee.Gender</td>
+                <td>@employee.Post</td>
+                <td>@employee.Age</td>
+            </tr>
+        </tbody>
+    }
+</table>

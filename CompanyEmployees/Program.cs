@@ -1,10 +1,12 @@
-using CompanyEmployees.Emploees;
+using CompanyEmployees.Models.Emploees;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddScoped<IEmploeeService, EmploeeService>();
+builder.Services.AddSingleton<IEmployeeService, EmployeeService>();
+builder.Services.AddSingleton<IGenerator<DateTime>, DateTimeGenerator>();
+builder.Services.AddSingleton<IGenerator<Employee>, EmployeeGenerator>();
 
 var app = builder.Build();
 

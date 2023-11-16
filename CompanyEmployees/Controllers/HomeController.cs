@@ -1,5 +1,5 @@
-﻿using CompanyEmployees.Emploees;
-using CompanyEmployees.Models;
+﻿using CompanyEmployees.Models;
+using CompanyEmployees.Models.Emploees;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -7,16 +7,32 @@ namespace CompanyEmployees.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IEmploeeService _emploeeService;
+        private readonly IEmployeeService _employeeService;
 
-        public HomeController(IEmploeeService emploeeService)
+        public HomeController(IEmployeeService employeeService)
         {
-            _emploeeService = emploeeService;
+            _employeeService = employeeService;
         }
 
         public IActionResult Index()
         {
-            return View();
+            IndexViewModel viewModel = new(_employeeService.Employees, 
+                _employeeService.Vacations);
+            return View(viewModel);
+        }
+
+        public IActionResult CurrentEmployee(int id)
+        {
+            if (!_employeeService.GetEmployeeById(id, out Employee? employee))
+            {
+                return Error();
+            }
+            CurrentEmployeeViewModel currentEmployeeViewModel = new(employee,
+                _employeeService.GetFirstGroup(),
+                _employeeService.GetSecondGroup(),
+                _employeeService.GetThirdGroup(),
+                _employeeService.GetFourthGroup());
+            return PartialView(currentEmployeeViewModel);
         }
 
         public IActionResult Privacy()
@@ -27,7 +43,8 @@ namespace CompanyEmployees.Controllers
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id 
+                ?? HttpContext.TraceIdentifier });
         }
     }
 }

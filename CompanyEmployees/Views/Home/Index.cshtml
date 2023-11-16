@@ -1,8 +1,70 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿@model IndexViewModel
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+    <div id="currentEmployee"></div>
+    <div id="spinner" class="text-center p-3 mb-3" style="display:none">
+        <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+
+    <h1 style="margin-bottom:50px; margin-top:15px;">Все сотрудники</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Фамилия</th>
+                <th scope="col">Имя</th>
+                <th scope="col">Отчество</th>
+                <th scope="col">Пол</th>
+                <th scope="col">Должность</th>
+                <th scope="col">Возраст</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        @foreach (var employee in Model.Employees)
+        {
+            <tbody>
+                <tr>
+                    <th scope="row">@employee.Id</th>
+                    <td>@employee.LastName</td>
+                    <td>@employee.FirstName</td>
+                    <td>@employee.MiddleName</td>
+                    <td>@employee.Gender</td>
+                    <td>@employee.Post</td>
+                    <td>@employee.Age</td>
+                    <td>
+                        <button type="button" class="btn btn-light" onclick="selectEmployee(this, @employee.Id)"> 
+                            Выбрать 
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        }
+    </table>
 </div>
+
+@section Scripts {
+    <script>
+
+        $(document).ready(function () {
+            $('#dirsearch').click(function (e) {
+                e.preventDefault();
+                sendRequest();
+            });
+        });
+
+        async function selectEmployee(element, id) {
+            var elems = $('#spinner');
+            for (var i = 0; i < elems.length; i++)elems[i].style.display = 'block';
+
+            const response = '@Url.Action("CurrentEmployee", "Home")?id=' + id;
+
+            $('#currentEmployee').load(response, function () {
+                for (var i = 0; i < elems.length; i++)elems[i].style.display = 'none';
+            });
+        }
+
+    </script>
+}
