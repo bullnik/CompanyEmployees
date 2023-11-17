@@ -36,7 +36,7 @@ namespace CompanyEmployees.Models.Emploees
                 ? _maleMiddleNames[_random.Next(_maleMiddleNames.Length)]
                 : _femaleMiddleNames[_random.Next(_femaleMiddleNames.Length)];
             Post post = (Post)_random.Next(_postCount);
-            int age = _random.Next(20, 71);
+            int age = _random.Next(18, 68);
 
             return new(firstName, lastName, middleName, gender, post, age);
         }

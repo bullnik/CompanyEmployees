@@ -23,16 +23,31 @@ namespace CompanyEmployees.Controllers
 
         public IActionResult CurrentEmployee(int id)
         {
-            if (!_employeeService.GetEmployeeById(id, out Employee? employee))
+            if (!_employeeService.GetEmployeeById(id, out Employee? employee)
+                || employee is null)
             {
                 return Error();
             }
             CurrentEmployeeViewModel currentEmployeeViewModel = new(employee,
-                _employeeService.GetFirstGroup(),
-                _employeeService.GetSecondGroup(),
-                _employeeService.GetThirdGroup(),
-                _employeeService.GetFourthGroup());
+                _employeeService.GetVacationsByEmployee(employee));
             return PartialView(currentEmployeeViewModel);
+        }
+
+        public IActionResult InsertVacation(int employeeId, int startYear, 
+            int startMonth, int startDay, int durationInDays) 
+        {
+            DateTime startDate = new(startYear, startMonth, startDay);
+            if (!_employeeService.InsertNewVacation(employeeId, startDate, 
+                durationInDays, out Vacation? vacation) || vacation is null)
+            {
+                return Error();
+            }
+            VacationIntersectionsViewModel vacationIntersectionsViewModel = new(
+                _employeeService.GetFirstGroup(vacation),
+                _employeeService.GetSecondGroup(vacation),
+                _employeeService.GetThirdGroup(vacation),
+                _employeeService.GetVacationsWithoutIntersections(vacation));
+            return PartialView("VacationIntersections", vacationIntersectionsViewModel);
         }
 
         public IActionResult Privacy()

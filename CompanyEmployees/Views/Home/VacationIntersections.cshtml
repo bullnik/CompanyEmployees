@@ -1,0 +1,109 @@
+﻿@*@Model VacationIntersectionsViewModel*@
+
+<h3 style="margin-bottom:25px; margin-top:50px;">Пересечение отпуска с сотрудниками моего отдела. Сотрудники моложе 30 лет.</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Фамилия</th>
+            <th scope="col">Пол</th>
+            <th scope="col">Должность</th>
+            <th scope="col">Возраст</th>
+            <th scope="col">Дата отпуска</th>
+        </tr>
+    </thead>
+    @foreach (var vacation in Model.EmployeesFirstGroup)
+    {
+        <tbody>
+            <tr>
+                <th scope="row">@vacation.Employee.Id</th>
+                <td>@vacation.Employee.LastName</td>
+                <td>@vacation.Employee.Gender</td>
+                <td>@vacation.Employee.Post</td>
+                <td>@vacation.Employee.Age</td>
+                <td>@vacation.StartDate.ToString("dd/MM/yyyy") - @vacation.EndDate.ToString("dd/MM/yyyy")</td>
+            </tr>
+        </tbody>
+    }
+</table>
+
+<h3 style="margin-bottom:25px; margin-top:5px;">Пересечение отпуска с сотрудниками-женщинами не из моего отдела. Возраст сотрудников - старше 30, но моложе 50.</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Фамилия</th>
+            <th scope="col">Пол</th>
+            <th scope="col">Должность</th>
+            <th scope="col">Возраст</th>
+            <th scope="col">Дата отпуска</th>
+        </tr>
+    </thead>
+    @foreach (var vacation in Model.EmployeesSecondGroup)
+    {
+        <tbody>
+            <tr>
+                <th scope="row">@vacation.Employee.Id</th>
+                <td>@vacation.Employee.LastName</td>
+                <td>@vacation.Employee.Gender</td>
+                <td>@vacation.Employee.Post</td>
+                <td>@vacation.Employee.Age</td>
+                <td>@vacation.StartDate.ToString("dd/MM/yyyy") - @vacation.EndDate.ToString("dd/MM/yyyy")</td>
+            </tr>
+        </tbody>
+    }
+</table>
+
+<h3 style="margin-bottom:25px; margin-top:5px;">Пересечение отпуска с сотрудниками из любого отдела. Возраст сотрудников - старше 50 лет.</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Фамилия</th>
+            <th scope="col">Пол</th>
+            <th scope="col">Должность</th>
+            <th scope="col">Возраст</th>
+            <th scope="col">Дата отпуска</th>
+        </tr>
+    </thead>
+    @foreach (var vacation in Model.EmployeesThirdGroup)
+    {
+        <tbody>
+            <tr>
+                <th scope="row">@vacation.Employee.Id</th>
+                <td>@vacation.Employee.LastName</td>
+                <td>@vacation.Employee.Gender</td>
+                <td>@vacation.Employee.Post</td>
+                <td>@vacation.Employee.Age</td>
+                <td>@vacation.StartDate.ToString("dd/MM/yyyy") - @vacation.EndDate.ToString("dd/MM/yyyy")</td>
+            </tr>
+        </tbody>
+    }
+</table>
+
+<h3 style="margin-bottom:25px; margin-top:5px;">Отпуска без пересечения.</h3>
+<table style="margin-bottom: 50px" class="table">
+    <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Фамилия</th>
+            <th scope="col">Пол</th>
+            <th scope="col">Должность</th>
+            <th scope="col">Возраст</th>
+            <th scope="col">Дата отпуска</th>
+        </tr>
+    </thead>
+    @foreach (var vacation in Model.EmployeesFourthGroup)
+    {
+        <tbody>
+            <tr>
+                <th scope="row">@vacation.Employee.Id</th>
+                <td>@vacation.Employee.LastName</td>
+                <td>@vacation.Employee.Gender</td>
+                <td>@vacation.Employee.Post</td>
+                <td>@vacation.Employee.Age</td>
+                <td>@vacation.StartDate.ToString("dd/MM/yyyy") - @vacation.EndDate.ToString("dd/MM/yyyy")</td>
+            </tr>
+        </tbody>
+    }
+</table>

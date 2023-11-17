@@ -25,119 +25,32 @@
         </tr>
     </tbody>
 </table>
-
-<h2 style="margin-bottom:25px; margin-top:5px;">Пересечение отпуска с сотрудниками моего отдела. Сотрудники моложе 30 лет.</h2>
 <table class="table">
     <thead>
         <tr>
-            <th scope="col">Id</th>
-            <th scope="col">Фамилия</th>
-            <th scope="col">Имя</th>
-            <th scope="col">Отчество</th>
-            <th scope="col">Пол</th>
-            <th scope="col">Должность</th>
-            <th scope="col">Возраст</th>
+            <th scope="col">Дата отпуска</th>
         </tr>
     </thead>
-    @foreach (var employee in Model.EmployeesFirstGroup)
-    {
-        <tbody>
-            <tr>
-                <th scope="row">@employee.Id</th>
-                <td>@employee.LastName</td>
-                <td>@employee.FirstName</td>
-                <td>@employee.MiddleName</td>
-                <td>@employee.Gender</td>
-                <td>@employee.Post</td>
-                <td>@employee.Age</td>
-            </tr>
-        </tbody>
-    }
-</table>
 
-<h2 style="margin-bottom:25px; margin-top:5px;">Пересечение отпуска с сотрудниками-женщинами не из моего отдела. Возраст сотрудников - старше 30, но моложе 50.</h2>
-<table class="table">
-    <thead>
-        <tr>
-            <th scope="col">Id</th>
-            <th scope="col">Фамилия</th>
-            <th scope="col">Имя</th>
-            <th scope="col">Отчество</th>
-            <th scope="col">Пол</th>
-            <th scope="col">Должность</th>
-            <th scope="col">Возраст</th>
-        </tr>
-    </thead>
-    @foreach (var employee in Model.EmployeesSecondGroup)
-    {
-        <tbody>
+    <tbody>
+        @foreach (var vacation in Model.Vacations)
+        {
             <tr>
-                <th scope="row">@employee.Id</th>
-                <td>@employee.LastName</td>
-                <td>@employee.FirstName</td>
-                <td>@employee.MiddleName</td>
-                <td>@employee.Gender</td>
-                <td>@employee.Post</td>
-                <td>@employee.Age</td>
+                <td>@vacation.StartDate.ToString("dd/MM/yyyy") - @vacation.EndDate.ToString("dd/MM/yyyy")</td>
             </tr>
-        </tbody>
-    }
-</table>
-
-<h2 style="margin-bottom:25px; margin-top:5px;">Пересечение отпуска с сотрудниками из любого отдела. Возраст сотрудников - старше 50 лет.</h2>
-<table class="table">
-    <thead>
+        }
         <tr>
-            <th scope="col">Id</th>
-            <th scope="col">Фамилия</th>
-            <th scope="col">Имя</th>
-            <th scope="col">Отчество</th>
-            <th scope="col">Пол</th>
-            <th scope="col">Должность</th>
-            <th scope="col">Возраст</th>
+            <td>
+                <div class="input-group">
+                    <input id="day" input type="number" min="1" max="31" placeholder="День" class="form-control">
+                    <input id="month" input type="number" min="1" max="12" placeholder="Месяц" class="form-control">
+                    <input id="year" input type="number" min="2023" max="2028" placeholder="Год" class="form-control">
+                    <input id="duration" input type="number" min="1" max="14" placeholder="Продолжительность" class="form-control">
+                    <button style="margin-left:5px" type="button" class="btn btn-light" onclick="insertVacation(this, @Model.CurrentEmployee.Id)">
+                        Добавить
+                    </button>
+                </div>
+            </td>
         </tr>
-    </thead>
-    @foreach (var employee in Model.EmployeesThirdGroup)
-    {
-        <tbody>
-            <tr>
-                <th scope="row">@employee.Id</th>
-                <td>@employee.LastName</td>
-                <td>@employee.FirstName</td>
-                <td>@employee.MiddleName</td>
-                <td>@employee.Gender</td>
-                <td>@employee.Post</td>
-                <td>@employee.Age</td>
-            </tr>
-        </tbody>
-    }
-</table>
-
-<h2 style="margin-bottom:25px; margin-top:5px;">Отпуска без пересечения.</h2>
-<table class="table">
-    <thead>
-        <tr>
-            <th scope="col">Id</th>
-            <th scope="col">Фамилия</th>
-            <th scope="col">Имя</th>
-            <th scope="col">Отчество</th>
-            <th scope="col">Пол</th>
-            <th scope="col">Должность</th>
-            <th scope="col">Возраст</th>
-        </tr>
-    </thead>
-    @foreach (var employee in Model.EmployeesFourthGroup)
-    {
-        <tbody>
-            <tr>
-                <th scope="row">@employee.Id</th>
-                <td>@employee.LastName</td>
-                <td>@employee.FirstName</td>
-                <td>@employee.MiddleName</td>
-                <td>@employee.Gender</td>
-                <td>@employee.Post</td>
-                <td>@employee.Age</td>
-            </tr>
-        </tbody>
-    }
+    </tbody>
 </table>
