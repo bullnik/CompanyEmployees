@@ -7,23 +7,23 @@ namespace CompanyEmployees.Models.Emploees
         public IEnumerable<Employee> Employees => _employees;
         public IEnumerable<Vacation> Vacations => _vacations;
 
-        private readonly IGenerator<Employee> _employeeGenerator;
-        private readonly IGenerator<DateTime> _dateTimeGenerator;
         private readonly List<Employee> _employees;
         private readonly List<Vacation> _vacations;
 
-        public EmployeeService(IGenerator<Employee> emploeeGenerator,
-            IGenerator<DateTime> dateTimeGenerator)
+        public EmployeeService(IDataGenerator dataGenerator)
         {
-            _employeeGenerator = emploeeGenerator;
-            _dateTimeGenerator = dateTimeGenerator;
-            _employees = emploeeGenerator.Generate(100).ToList();
+            _employees = dataGenerator.GenerateEmployee(100).ToList();
             _vacations = new();
-            _employees.ForEach(employee => _vacations.AddRange(GenerateVacationsForEmployee(employee)));
+            _employees.ForEach(employee =>
+            {
+                _vacations.Add(dataGenerator.GenerateVacation(employee, 14));
+                _vacations.Add(dataGenerator.GenerateVacation(employee, 7));
+                _vacations.Add(dataGenerator.GenerateVacation(employee, 7));
+            });
         }
 
         //* Пересечение отпуска с сотрудниками моего отдела.Сотрудники моложе 30 лет.
-        public IEnumerable<Vacation> GetFirstGroup(Vacation vacation)
+        public IEnumerable<Vacation> GetVacationIntersectionsWithSameDepartmentAndUnderThirtyYears(Vacation vacation)
         {
             return from vac in _vacations
                    where vac.Employee.Age < 30
@@ -35,7 +35,7 @@ namespace CompanyEmployees.Models.Emploees
         }
 
         //* Пересечение отпуска с сотрудниками-женщинами не из моего отдела.Возраст сотрудников - старше 30, но моложе 50.
-        public IEnumerable<Vacation> GetSecondGroup(Vacation vacation)
+        public IEnumerable<Vacation> GetVacationIntersectionsWithFemalesDifferentDepartmentBetweenThirtyAndFiftyYears(Vacation vacation)
         {
             return from vac in _vacations
                    where vac.Employee.Gender == Gender.Female
@@ -47,7 +47,7 @@ namespace CompanyEmployees.Models.Emploees
         }
 
         //* Пересечение отпуска с сотрудниками из любого отдела.Возраст сотрудников - старше 50 лет.
-        public IEnumerable<Vacation> GetThirdGroup(Vacation vacation)
+        public IEnumerable<Vacation> GetVacationIntersectionsWithEmployeesAboveFiftyYears(Vacation vacation)
         {
             return from vac in _vacations
                    where vac.Employee.Age > 50
@@ -87,14 +87,6 @@ namespace CompanyEmployees.Models.Emploees
         public IEnumerable<Vacation> GetVacationsByEmployee(Employee employee)
         {
             return _vacations.Where(vacation => vacation.Employee == employee);
-        }
-
-        private IEnumerable<Vacation> GenerateVacationsForEmployee(Employee employee)
-        {
-            List<DateTime> dateTimes = _dateTimeGenerator.Generate(3).ToList();
-            yield return new(dateTimes[0], dateTimes[0] + TimeSpan.FromDays(13), employee);
-            yield return new(dateTimes[1], dateTimes[1] + TimeSpan.FromDays(6), employee);
-            yield return new(dateTimes[2], dateTimes[2] + TimeSpan.FromDays(6), employee);
         }
     }
 }

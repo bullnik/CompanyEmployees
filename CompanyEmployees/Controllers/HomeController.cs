@@ -38,14 +38,16 @@ namespace CompanyEmployees.Controllers
         {
             DateTime startDate = new(startYear, startMonth, startDay);
             if (!_employeeService.InsertNewVacation(employeeId, startDate, 
-                durationInDays, out Vacation? vacation) || vacation is null)
+                durationInDays, out Vacation? vacation) 
+                || vacation is null
+                || durationInDays > 14)
             {
                 return Error();
             }
             VacationIntersectionsViewModel vacationIntersectionsViewModel = new(
-                _employeeService.GetFirstGroup(vacation),
-                _employeeService.GetSecondGroup(vacation),
-                _employeeService.GetThirdGroup(vacation),
+                _employeeService.GetVacationIntersectionsWithSameDepartmentAndUnderThirtyYears(vacation),
+                _employeeService.GetVacationIntersectionsWithFemalesDifferentDepartmentBetweenThirtyAndFiftyYears(vacation),
+                _employeeService.GetVacationIntersectionsWithEmployeesAboveFiftyYears(vacation),
                 _employeeService.GetVacationsWithoutIntersections(vacation));
             return PartialView("VacationIntersections", vacationIntersectionsViewModel);
         }
