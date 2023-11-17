@@ -36,11 +36,14 @@ namespace CompanyEmployees.Controllers
         public IActionResult InsertVacation(int employeeId, int startYear, 
             int startMonth, int startDay, int durationInDays) 
         {
+            if (durationInDays > 14)
+            {
+                return Error();
+            }
             DateTime startDate = new(startYear, startMonth, startDay);
             if (!_employeeService.InsertNewVacation(employeeId, startDate, 
                 durationInDays, out Vacation? vacation) 
-                || vacation is null
-                || durationInDays > 14)
+                || vacation is null)
             {
                 return Error();
             }
