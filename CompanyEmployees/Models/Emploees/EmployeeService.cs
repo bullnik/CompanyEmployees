@@ -27,10 +27,10 @@ namespace CompanyEmployees.Models.Emploees
         {
             return from vac in _vacations
                    where vac.Employee.Age < 30
-                   where vac != vacation
                    where vac.Employee.Department == vacation.Employee.Department
                    where !(vac.EndDate < vacation.StartDate 
                         || vac.StartDate > vacation.EndDate)
+                   where vac.Employee.Id != vacation.Employee.Id
                    select vac;
         }
 
@@ -43,6 +43,7 @@ namespace CompanyEmployees.Models.Emploees
                    where vac.Employee.Age > 30 && vac.Employee.Age < 50
                    where !(vac.EndDate < vacation.StartDate
                         || vac.StartDate > vacation.EndDate)
+                   where vac.Employee.Id != vacation.Employee.Id
                    select vac;
         }
 
@@ -53,6 +54,7 @@ namespace CompanyEmployees.Models.Emploees
                    where vac.Employee.Age > 50
                    where !(vac.EndDate < vacation.StartDate
                         || vac.StartDate > vacation.EndDate)
+                   where vac.Employee.Id != vacation.Employee.Id
                    select vac;
         }
 
@@ -60,6 +62,7 @@ namespace CompanyEmployees.Models.Emploees
         public IEnumerable<Vacation> GetVacationsWithoutIntersections(Vacation vacation)
         {
             return from vac in _vacations
+                   where vac.Employee.Id != vacation.Employee.Id
                    where vac.EndDate < vacation.StartDate
                         || vac.StartDate > vacation.EndDate
                    select vac;
