@@ -3,7 +3,7 @@
     public enum Department
     {
         TradingFloor,
-        Store,
+        Warehouse,
         Directorate
     }
 }

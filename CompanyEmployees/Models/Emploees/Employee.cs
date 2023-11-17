@@ -37,7 +37,7 @@
                 or Post.Merchandiser => Department.TradingFloor,
                 Post.Storekeeper 
                 or Post.Loader 
-                or Post.WarehouseManager => Department.Store,
+                or Post.WarehouseManager => Department.Warehouse,
                 Post.Director 
                 or Post.Lawyer 
                 or Post.Economist => Department.Directorate,
